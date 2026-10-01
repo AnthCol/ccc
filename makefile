@@ -1,15 +1,16 @@
-CC := g++
-CFLAGS := -std=c++20 -Wall -Wpedantic -g
+CXX := g++
+CXXFLAGS := -std=c++26 -Wall -Wpedantic -g
 
-all: lexer parser compile
+all: cc
 
-compile: lexer parser main.cpp
-	$(CC) $(CFLAGS) parser.tab.c lex.yy.cc main.cpp -o cc
+cc: parser.tab.c lex.yy.c main.cpp
+	$(CXX) $(CXXFLAGS) parser.tab.c lex.yy.c main.cpp -o ccc
 
-lexer: lexer.l 
-	flex --header-file=lexer.hpp -o lexer.cpp lexer.l
+parser.tab.c parser.tab.h: parser.y
+	bison -d -v parser.y
 
-parser: parser.y 
-	bison -d -v -o parser.cpp parser.y
+lex.yy.c: lexer.l parser.tab.h
+	flex lexer.l
 
-
+clean:
+	rm -f cc parser.tab.c parser.tab.h parser.output lex.yy.c

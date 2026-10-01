@@ -1,33 +1,53 @@
-%require "3.2"
-%language "C++"
-%skeleton "lalr1.cc"
+%{
+
+#include <iostream>
+
+extern int yylex();
+void yyerror(const char* s);
+
+%}
 
 %define api.value.type {int}
-%define parse.assert
-
-%{
-#include <iostream>
-#include 
-int yylex(); 
-void yyerror(const char* s); 
-%}
 
 %token NUMBER
 %token PLUS "+"
 %token TIMES "*"
 
+%token LCURLY "{"
+%token RCURLY "}"
+
+%token LPAREN "("
+%token RPAREN ")"
+
+%token RETURN "return"
+
 %%
 
 input:
-    NUMBER PLUS NUMBER
+    expression
     {
-        std::cout << $1 + $3 << std::endl; 
-    }; 
+        std::cout << "Result: " << $1 << std::endl;
+    }
+    ;
+
+expression:
+      NUMBER
+      {
+          $$ = $1;
+      }
+    | expression PLUS expression
+      {
+          $$ = $1 + $3;
+      }
+    | expression TIMES expression
+      {
+          $$ = $1 * $3;
+      }
+    ;
 
 %%
 
-namespace yy {
-    void parser::yyerror(const std::string& msg) {
-        std::cerr << "Error: " << msg << std::endl; 
-    }
+void yyerror(const char* s)
+{
+    std::cerr << "Error: " << s << std::endl;
 }
