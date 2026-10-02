@@ -1,5 +1,5 @@
 CXX := g++
-CXXFLAGS := -std=c++26 -Wall -Wpedantic -g
+CXXFLAGS := -std=c++26 -Wall -g
 
 all: cc
 
@@ -13,4 +13,4 @@ lex.yy.c: lexer.l parser.tab.h
 	flex lexer.l
 
 clean:
-	rm -f cc parser.tab.c parser.tab.h parser.output lex.yy.c
+	rm -f ccc parser.tab.c parser.tab.h parser.output lex.yy.c

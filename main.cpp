@@ -4,7 +4,9 @@
 #include "parser.tab.h"
 
 extern int yyparse();
+extern int yylex(); 
 extern FILE* yyin;
+extern char* yytext; 
 
 int main(int argc, char** argv)
 {
@@ -22,11 +24,18 @@ int main(int argc, char** argv)
 
     yyin = file;
 
+
     if (yyparse() == 0) {
         std::cout << "Parsing successful!\n";
     } else {
         std::cout << "Parsing failed!\n";
     }
+
+    // int token; 
+    // while ((token = yylex()) != 0) {
+    //     std::cout << "Token: " << token << std::endl; 
+    //     std::cout << "    Text: " << yytext << std::endl; 
+    // }
 
     fclose(file);
 

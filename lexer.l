@@ -11,13 +11,23 @@
 
 [0-9]+          { yylval = std::stoi(yytext); return NUMBER; }
 
+"int"           { return INT; }
+"float"         { return FLOAT; }
+"double"        { return DOUBLE; }
+"char"          { return CHAR; }
+"long"          { return LONG; }
+"short"         { return SHORT; }
+"return"        { return RETURN; }
 "+"             { return PLUS; }
 "*"             { return TIMES; }
 "{"             { return LCURLY; }
 "}"             { return RCURLY; }
 "("             { return LPAREN; }
 ")"             { return RPAREN; }
-"return"        { return RETURN; }
+";"             { return SEMICOLON; }
+","             { return COMMA; }
+[a-zA-Z_][a-zA-Z0-9_]* { return IDENTIFIER; }
+
 
 [ \t\n]+        ;
 
