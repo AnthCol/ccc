@@ -14,3 +14,6 @@ lex.yy.c: lexer.l parser.tab.h
 
 clean:
 	rm -f ccc parser.tab.c parser.tab.h parser.output lex.yy.c
+
+test:
+	./ccc TestingFiles/test.c
