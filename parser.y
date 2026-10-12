@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+#include "ast.h"
+
 extern int yylex();
 void yyerror(const char* s);
 
@@ -86,6 +88,8 @@ function_definition:
     type_specifier IDENTIFIER LPAREN arg_list RPAREN compound_statement
     {
         std::cout << "Function definition recognized\n"; 
+        std::cout << $2 << "\n"; 
+        $$ = new FunctionDefinition($2); 
     }
     ;
 
